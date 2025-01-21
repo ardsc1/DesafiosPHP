@@ -16,7 +16,7 @@
         echo "<p>Um número entre 1 e 100 foi escolhido. Tente adivinhar!</p>";
     }
 
-    // Verificar se o formulário foi enviado
+
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $palpite = filter_input(INPUT_POST, 'palpite', FILTER_VALIDATE_INT);
 

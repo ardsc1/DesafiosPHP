@@ -33,12 +33,12 @@
 <?php
 session_start();
 
-// Inicializar o carrinho na sessão
+
 if (!isset($_SESSION['carrinho'])) {
     $_SESSION['carrinho'] = [];
 }
 
-// Adicionar item ao carrinho
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['adicionar'])) {
     $nome = htmlspecialchars($_POST['nome']);
     $quantidade = (int) $_POST['quantidade'];
