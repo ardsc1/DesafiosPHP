@@ -4,110 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simulador de Carrinho de Compras</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f5f5f5;
-        }
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            background: #ffffff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-        }
-        form {
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            margin: 10px 0 5px;
-        }
-        input[type="text"], input[type="number"] {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        button {
-            padding: 0pz ;
-            border: none;
-            border-radius: 5px;
-            background-color: #007bff;
-            color: white;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        table, th, td {
-            border: 1px solid #ccc;
-        }
-        th, td {
-            padding: 10px;
-            text-align: left;
-        }
-        th {
-            background-color: #f8f9fa;
-        }
-        .error {
-            color: red;
-            margin: 10px 0;
-        }
-        .success {
-            color: green;
-            margin: 10px 0;
-        }
-        .clear-button {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            background-color: #dc3545;
-            color: white;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        .clear-button:hover {
-            background-color: #a71d2a;
-        }
-        .button-group {
-            display: flex;
-            gap: 10px;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <h1>Simulador de Carrinho de Compras</h1>
         <form action="" method="post">
             <label for="nome">Nome do Produto:</label>
-            <input type="text" id="nome" name="nome" required>
+            <input type="text" id="nome" name="nome" >
 
             <label for="quantidade">Quantidade:</label>
-            <input type="number" id="quantidade" name="quantidade" min="1" required>
+            <input type="number" id="quantidade" name="quantidade" min="1" >
 
             <label for="preco">Preço:</label>
-            <input type="text" id="preco" name="preco" required>
+            <input type="number" id="preco" name="preco" >
 
             <div class="button-group">
                 <button type="submit" name="adicionar">Adicionar ao Carrinho</button>
                 <button type="submit" name="finalizar">Finalizar Compra</button>
-                <a href="?limpar=true" class="clear-button">Limpar Carrinho</a>
+                
             </div>
         </form>
 
