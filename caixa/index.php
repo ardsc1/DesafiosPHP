@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-// Inicialização das cédulas disponíveis no caixa
 function inicializarCaixa() {
     return [
         200 => 5,
@@ -18,7 +17,6 @@ if (!isset($_SESSION['caixa'])) {
     $_SESSION['caixa'] = inicializarCaixa();
 }
 
-// Função para calcular o troco
 function calcularTroco($valorCompra, $valorPago, &$caixa) {
     $troco = $valorPago - $valorCompra;
     if ($troco < 0) {
