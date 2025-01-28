@@ -1,66 +1,120 @@
+<?php
+session_start();
+
+// Inicialização das cédulas disponíveis no caixa
+function inicializarCaixa() {
+    return [
+        200 => 5,
+        100 => 7,
+        50 => 10,
+        20 => 15,
+        10 => 20,
+        5 => 25,
+        2 => 30
+    ];
+}
+
+if (!isset($_SESSION['caixa'])) {
+    $_SESSION['caixa'] = inicializarCaixa();
+}
+
+// Função para calcular o troco
+function calcularTroco($valorCompra, $valorPago, &$caixa) {
+    $troco = $valorPago - $valorCompra;
+    if ($troco < 0) {
+        return "Valor pago é insuficiente. Por favor, insira um valor maior ou igual ao valor da compra.";
+    }
+
+    $cedulasTroco = [];
+    foreach ($caixa as $cedula => $quantidade) {
+        if ($troco >= $cedula && $quantidade > 0) {
+            $numCedulas = min(intdiv($troco, $cedula), $quantidade);
+            if ($numCedulas > 0) {
+                $cedulasTroco[$cedula] = $numCedulas;
+                $troco -= $numCedulas * $cedula;
+                $caixa[$cedula] -= $numCedulas;
+            }
+        }
+    }
+
+    if ($troco > 0) {
+        return "Não há cédulas suficientes para dar o troco exato.";
+    }
+
+    return $cedulasTroco;
+}
+
+function calcularTotalCaixa($caixa) {
+    $total = 0;
+    foreach ($caixa as $cedula => $quantidade) {
+        $total += $cedula * $quantidade;
+    }
+    return $total;
+}
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (isset($_POST['reset'])) {
+        $_SESSION['caixa'] = inicializarCaixa();
+        $mensagem = "Caixa restaurado com sucesso!";
+    } else {
+        $valorCompra = floatval($_POST['valor_compra']);
+        $valorPago = floatval($_POST['valor_pago']);
+
+        if (!is_numeric($valorCompra) || !is_numeric($valorPago)) {
+            $mensagem = "Por favor, insira valores numéricos válidos.";
+        } else {
+            $resultado = calcularTroco($valorCompra, $valorPago, $_SESSION['caixa']);
+            if (is_array($resultado)) {
+                $mensagem = "Troco: <br>";
+                foreach ($resultado as $cedula => $quantidade) {
+                    $mensagem .= "$quantidade nota(s) de R$ $cedula <br>";
+                }
+            } else {
+                $mensagem = $resultado;
+            }
+        }
+    }
+}
+
+$totalCaixa = calcularTotalCaixa($_SESSION['caixa']);
+?>
+
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Caixa Registradora</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="caixa.css">
 </head>
 <body>
-    
-
     <div class="container">
         <h1>Caixa Registradora</h1>
-
-        <form action="" method="post">
-            <label for="valor_compra">Valor da Compra (R$):</label>
-            <input type="number" id="valor_compra" name="valor_compra" step="0.01" required>
-
-            <label for="valor_pago">Valor Pago (R$):</label>
-            <input type="number" id="valor_pago" name="valor_pago" step="0.01" required>
-
+        <form method="POST">
+            <label for="valor_compra">Valor da Compra:</label>
+            <input type="text" id="valor_compra" name="valor_compra">
+            <br>
+            <label for="valor_pago">Valor Pago:</label>
+            <input type="text" id="valor_pago" name="valor_pago">
+            <br>
             <button type="submit" name="calcular">Calcular Troco</button>
+            <button type="submit" name="reset">Resetar Caixa</button>
         </form>
 
-        <?php
-        //mudanças é para colocar a quantidades de nota q tem no caixa tipo 2 notas de 200, 5 de 100 e ir continuando ,ate fechar o dia 
-        
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $valor_compra = $_POST['valor_compra'];
-            $valor_pago = $_POST['valor_pago'];
-           
-            if (!is_numeric($valor_compra) || !is_numeric($valor_pago)) {
-                echo "<p class='error'>Por favor, insira valores numéricos válidos.</p>";
-            } elseif ($valor_pago < $valor_compra) {
-                echo "<p class='error'>O valor pago é menor que o valor da compra. Por favor, insira um valor maior.</p>";
-            } else {
-                
-                $troco = $valor_pago - $valor_compra;
-               
-                $cedulas = [200, 100, 50, 20, 10, 5, 2];
-                $quantidade_cedulas = [];
+        <?php if (!empty($mensagem)): ?>
+            <div class="resultado">
+                <?php echo $mensagem; ?>
+            </div>
+        <?php endif; ?>
 
-                
-                foreach ($cedulas as $cedula) {
-                    $quantidade_cedulas[$cedula] = floor($troco / $cedula);
-                    $troco -= $quantidade_cedulas[$cedula] * $cedula;
-                }
+        <h2>Estado atual do caixa:</h2>
+        <ul>
+            <?php foreach ($_SESSION['caixa'] as $cedula => $quantidade): ?>
+                <li>R$ <?php echo $cedula; ?>: <?php echo $quantidade; ?> notas</li>
+            <?php endforeach; ?>
+        </ul>
 
-                
-                echo "<p class='success'>Troco: R$ " . number_format($valor_pago - $valor_compra, 2, ',', '.') . "</p>";
-
-                
-                echo "<div class='result'><strong>Quantidade de cédulas para o troco:</strong><br>";
-                foreach ($quantidade_cedulas as $cedula => $quantidade) {
-                    if ($quantidade > 0) {
-                        echo "{$quantidade} cédula(s) de R$ " . number_format($cedula, 2, ',', '.') . "<br>";
-                    }
-                }
-                echo "</div>";
-            }
-        }
-        ?>
+        <h3>Total no caixa: R$ <?php echo number_format($totalCaixa, 2, ',', '.'); ?></h3>
     </div>
-
 </body>
 </html>
