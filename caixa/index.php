@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    
 
     <div class="container">
         <h1>Caixa Registradora</h1>
@@ -22,6 +23,8 @@
         </form>
 
         <?php
+        //mudanças é para colocar a quantidades de nota q tem no caixa tipo 2 notas de 200, 5 de 100 e ir continuando ,ate fechar o dia 
+        
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $valor_compra = $_POST['valor_compra'];
             $valor_pago = $_POST['valor_pago'];
