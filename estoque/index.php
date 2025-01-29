@@ -1,6 +1,7 @@
 <?php
 session_start();
 
+// Modal de adicionar produto , adicionar coluna na tabel ou remover e atualizar coluna de opções
 
 if (!isset($_SESSION['estoque'])) {
     $_SESSION['estoque'] = [];
