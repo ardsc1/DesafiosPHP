@@ -1,11 +1,9 @@
 <?php
 session_start();
 
-
 if (!isset($_SESSION['estoque'])) {
     $_SESSION['estoque'] = [];
 }
-
 
 function estoqueBaixo($quantidade) {
     return $quantidade < 5 ? " (Estoque Baixo)" : "";
@@ -26,7 +24,6 @@ if (isset($_POST['adicionar'])) {
     }
 }
 
-
 if (isset($_POST['remover'])) {
     $id = intval($_POST['id_remover']);
     if (isset($_SESSION['estoque'][$id])) {
@@ -36,7 +33,6 @@ if (isset($_POST['remover'])) {
         $mensagem = "Erro: Produto não encontrado!";
     }
 }
-
 
 if (isset($_POST['atualizar'])) {
     $id = intval($_POST['id_atualizar']);
@@ -49,9 +45,7 @@ if (isset($_POST['atualizar'])) {
     }
 }
 
-
 $precoMinimo = isset($_POST['filtrar_preco']) ? floatval($_POST['preco_minimo']) : null;
-
 
 if (isset($_POST['calcular_total'])) {
     $categoria = $_POST['categoria_total'];
@@ -82,12 +76,10 @@ if (isset($_POST['calcular_total'])) {
             <?php if (isset($mensagem)): ?>
                 <div class="mensagem"><?php echo $mensagem; ?></div>
             <?php endif; ?>
-
             
             <h2>Adicionar Produto</h2>
             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAdicionar">Adicionar Produto</button>
-
-            
+           
             <div class="modal fade" id="modalAdicionar" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -108,22 +100,19 @@ if (isset($_POST['calcular_total'])) {
                     </div>
                 </div>
             </div>
-
             
             <h2 class="mt-3">Filtrar Produtos por Preço</h2>
             <form method="POST">
                 <input type="number" step="0.01" name="preco_minimo" placeholder="Preço mínimo (R$)" required>
                 <button class="btn btn-primary mt-1" type="submit" name="filtrar_preco">Filtrar</button>
             </form>
-
-            
+           
             <h2>Calcular Valor do Estoque por Categoria</h2>
             <form method="POST">
                 <input type="text" name="categoria_total" placeholder="Categoria" required>
                 <button type="submit" class="btn btn-primary mt-1" name="calcular_total">Calcular</button>
             </form>
-
-            
+           
             <h2>Estoque Atual</h2>
             <table class="table">
                 <thead>
@@ -154,13 +143,12 @@ if (isset($_POST['calcular_total'])) {
                                     <button class="btn btn-danger btn-sm" onclick="confirmarRemocao(<?php echo $id; ?>)">Remover</button>
                                 </td>
                             </tr>
-
-                            
+                           
                             <div class="modal fade" id="modalEditar<?php echo $id; ?>" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="modalLabel">Editar Quantidade</h5>
+                                            <h5 class="modal-title mt-4" id="modalLabel">Editar Quantidade</h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
