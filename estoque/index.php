@@ -1,16 +1,15 @@
 <?php
 session_start();
 
-// Modal de adicionar produto , adicionar coluna na tabel ou remover e atualizar coluna de opções
 
 if (!isset($_SESSION['estoque'])) {
     $_SESSION['estoque'] = [];
 }
 
+
 function estoqueBaixo($quantidade) {
     return $quantidade < 5 ? " (Estoque Baixo)" : "";
 }
-
 
 if (isset($_POST['adicionar'])) {
     $id = intval($_POST['id']);
@@ -64,7 +63,6 @@ if (isset($_POST['calcular_total'])) {
     }
     $mensagem = "O valor total do estoque na categoria '$categoria' é R$ " . number_format($totalEstoque, 2, ',', '.');
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -74,12 +72,8 @@ if (isset($_POST['calcular_total'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciamento de Estoque</title>
     <link rel="stylesheet" href="estoque.css">
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-      crossorigin="anonymous"
-    />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
     <div id="principal">
@@ -88,55 +82,50 @@ if (isset($_POST['calcular_total'])) {
             <?php if (isset($mensagem)): ?>
                 <div class="mensagem"><?php echo $mensagem; ?></div>
             <?php endif; ?>
+
+            
             <h2>Adicionar Produto</h2>
             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAdicionar">Adicionar Produto</button>
-        
-        <div class="modal fade" id="modalAdicionar" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalLabel">Adicionar Produto</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form method="POST">
-                        <input type="number" name="id" class="form-control mb-2" placeholder="ID do Produto" required>
-                        <input type="text" name="nome" class="form-control mb-2" placeholder="Nome do Produto" required>
-                        <input type="text" name="categoria" class="form-control mb-2" placeholder="Categoria" required>
-                        <input type="number" name="quantidade" class="form-control mb-2" placeholder="Quantidade" required>
-                        <input type="number" step="0.01" name="preco" class="form-control mb-2" placeholder="Preço (R$)" required>
-                        <button type="submit" name="adicionar" class="btn btn-success">Adicionar</button>
-                    </form>
+
+            
+            <div class="modal fade" id="modalAdicionar" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalLabel">Adicionar Produto</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="POST">
+                                <input type="number" name="id" class="form-control mb-2" placeholder="ID do Produto" required>
+                                <input type="text" name="nome" class="form-control mb-2" placeholder="Nome do Produto" required>
+                                <input type="text" name="categoria" class="form-control mb-2" placeholder="Categoria" required>
+                                <input type="number" name="quantidade" class="form-control mb-2" placeholder="Quantidade" required>
+                                <input type="number" step="0.01" name="preco" class="form-control mb-2" placeholder="Preço (R$)" required>
+                                <button type="submit" name="adicionar" class="btn btn-success">Adicionar</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        </div>
-        </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-        </body>
-            <h2>Remover Produto</h2>
-            <form method="POST">
-                <input type="text" name="id_remover" placeholder="ID do Produto" required>
-                <button type="submit" name="remover">Remover</button>
-            </form>
-            <h2>Atualizar Quantidade</h2>
-            <form method="POST">
-                <input type="text" name="id_atualizar" placeholder="ID do Produto" required>
-                <input type="number" name="nova_quantidade" placeholder="Nova Quantidade" required>
-                <button type="submit" name="atualizar">Atualizar</button>
-            </form>
-            <h2>Filtrar Produtos por Preço</h2>
+
+            
+            <h2 class="mt-3">Filtrar Produtos por Preço</h2>
             <form method="POST">
                 <input type="number" step="0.01" name="preco_minimo" placeholder="Preço mínimo (R$)" required>
-                <button type="submit" name="filtrar_preco">Filtrar</button>
+                <button class="btn btn-primary mt-1" type="submit" name="filtrar_preco">Filtrar</button>
             </form>
+
+            
             <h2>Calcular Valor do Estoque por Categoria</h2>
             <form method="POST">
                 <input type="text" name="categoria_total" placeholder="Categoria" required>
-                <button type="submit" name="calcular_total">Calcular</button>
+                <button type="submit" class="btn btn-primary mt-1" name="calcular_total">Calcular</button>
             </form>
+
+            
             <h2>Estoque Atual</h2>
-            <table>
+            <table class="table">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -144,6 +133,7 @@ if (isset($_POST['calcular_total'])) {
                         <th>Categoria</th>
                         <th>Quantidade</th>
                         <th>Preço (R$)</th>
+                        <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -158,12 +148,74 @@ if (isset($_POST['calcular_total'])) {
                                     <span class="alerta"><?php echo estoqueBaixo($produto['quantidade']); ?></span>
                                 </td>
                                 <td><?php echo number_format($produto['preco'], 2, ',', '.'); ?></td>
+                                <td>                                   
+                                    <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#modalEditar<?php echo $id; ?>">Editar</button>
+                                    
+                                    <button class="btn btn-danger btn-sm" onclick="confirmarRemocao(<?php echo $id; ?>)">Remover</button>
+                                </td>
                             </tr>
+
+                            
+                            <div class="modal fade" id="modalEditar<?php echo $id; ?>" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="modalLabel">Editar Quantidade</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form method="POST">
+                                                <input type="hidden" name="id_atualizar" value="<?php echo $id; ?>">
+                                                <input type="number" name="nova_quantidade" class="form-control mb-2" placeholder="Nova Quantidade" required>
+                                                <button type="submit" name="atualizar" class="btn btn-success">Atualizar</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         <?php endif; ?>
                     <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function confirmarRemocao(id) {
+            Swal.fire({
+                title: "Tem certeza que deseja remover este produto?",
+                text: "Essa ação não pode ser desfeita!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Sim, remover!",
+                cancelButtonText: "Cancelar"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    
+                    let form = document.createElement('form');
+                    form.method = "POST";
+                    form.style.display = "none";
+
+                    let input = document.createElement('input');
+                    input.type = "hidden";
+                    input.name = "id_remover";
+                    input.value = id;
+
+                    let button = document.createElement('input');
+                    button.type = "hidden";
+                    button.name = "remover";
+                    button.value = "1";
+
+                    form.appendChild(input);
+                    form.appendChild(button);
+                    document.body.appendChild(form);
+                    form.submit();
+                }
+            });
+        }
+    </script>
 </body>
 </html>

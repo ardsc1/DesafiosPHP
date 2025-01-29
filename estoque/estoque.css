@@ -1,11 +1,10 @@
-/* Estilização do fundo da página */
+
 body {
   background-color: #f8f9fa;
   font-family: 'Arial', sans-serif;
   display: flex;
 }
 
-/* Estilização do container principal */
 .container {
   margin-top: 30px;
   background: #ffffff;
@@ -14,44 +13,44 @@ body {
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Estilização do título */
+
 h1 {
   text-align: center;
   color: #343a40;
 }
 
-/* Botão de abrir o modal */
+
 .btn-primary {
   display: block;
   width: 200px;
   margin: 20px auto;
-  background-color: rgb(77, 77, 77);
+  background-color: greenyellow;
 }
 
-/* Estilização do modal */
+
 .modal-content {
   border-radius: 10px;
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* Cabeçalho do modal */
+
 .modal-header {
   background: #6be79a;
   color: white;
   border-radius: 10px 10px 0 0;
 }
 
-/* Ícone de fechar modal */
+
 .btn-close {
   filter: brightness(0) invert(1);
 }
 
-/* Corpo do modal */
+
 .modal-body {
   padding: 20px;
 }
 
-/* Estilização dos campos de entrada */
+
 .modal-body input {
   border-radius: 5px;
   border: 1px solid #ced4da;
@@ -59,7 +58,7 @@ h1 {
   width: 100%;
 }
 
-/* Estilização do botão de adicionar */
+
 .btn-success {
   display: block;
   width: 100%;
@@ -68,7 +67,7 @@ h1 {
   font-size: 16px;
 }
 
-/* Efeito hover nos botões */
+
 .btn-primary:hover, 
 .btn-success:hover {
   opacity: 0.9;
