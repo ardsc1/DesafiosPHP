@@ -149,50 +149,50 @@ if (isset($_POST['calcular_total'])) {
               <?php foreach ($_SESSION['estoque'] as $id => $produto): ?>
                 <?php if (is_null($precoMinimo) || $produto['preco'] >= $precoMinimo): ?>
                   <tr>
-                    <td><?php echo $id; ?></td>
-                    <td><?php echo $produto['nome']; ?></td>,
-                    <td><?php echo $produto['categoria']; ?></td>
+                    <td><?= $id; ?></td>
+                    <td><?= $produto['nome']; ?></td>,
+                    <td><?= $produto['categoria']; ?></td>
                     <td>
-                      <?php echo $produto['quantidade']; ?>
-                      <span class="alerta"><?php echo estoqueBaixo($produto['quantidade']); ?></span>
+                      <?= $produto['quantidade']; ?>
+                      <span class="alerta"><?= estoqueBaixo($produto['quantidade']); ?></span>
                     </td>
-                    <td><?php echo number_format($produto['preco'], 2, ',', '.'); ?></td>
-                    <td><?php echo number_format($produto['quantidade'] * $produto['preco'], 2, ',', '.'); ?></td>
+                    <td><?= number_format($produto['preco'], 2, ',', '.'); ?></td>
+                    <td><?= number_format($produto['quantidade'] * $produto['preco'], 2, ',', '.'); ?></td>
                     <td>
-                      <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#modalEditar<?php echo $id; ?>">Editar</button>
-                      <button class="btn btn-danger btn-sm" onclick="confirmarRemocao(<?php echo $id; ?>)">Remover</button>
+                      <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#modalEditar<?= $id; ?>">Editar</button>
+                      <button class="btn btn-danger btn-sm" onclick="confirmarRemocao(<?= $id; ?>)">Remover</button>
                     </td>
                   </tr>
                             
-                  <div class="modal fade" id="modalEditar<?php echo $id; ?>" tabindex="-1" aria-labelledby="modalEditarLabel<?php echo $id; ?>" aria-hidden="true">
+                  <div class="modal fade" id="modalEditar<?= $id; ?>" tabindex="-1" aria-labelledby="modalEditarLabel<?= $id; ?>" aria-hidden="true">
                     <div class="modal-dialog">
                       <div class="modal-content">
                         <div class="modal-header">
-                          <h5 class="modal-title" id="modalEditarLabel<?php echo $id; ?>">Editar Produto</h5>
+                          <h5 class="modal-title" id="modalEditarLabel<?= $id; ?>">Editar Produto</h5>
                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                          <form id="formAtualizar_<?php echo $id; ?>" method="POST">
+                          <form id="formAtualizar_<?= $id; ?>" method="POST">
                             <input type="hidden" name="atualizar" value="1">
-                            <input type="hidden" name="id_atualizar" value="<?php echo $id; ?>">
-                            <label for="novo_nome_<?php echo $id; ?>">Novo Nome:</label>
-                            <input type="text" id="novo_nome_<?php echo $id; ?>" name="novo_nome" class="form-control mb-2" required value="<?php echo $produto['nome']; ?>">
-                            <label for="nova_categoria_<?php echo $id; ?>">Nova Categoria:</label>
-                            <select id="nova_categoria_<?php echo $id; ?>" name="nova_categoria" class="form-control mb-2" required>
-                              <option value="eletronico" <?php echo ($produto['categoria'] == 'eletronico') ? 'selected' : ''; ?>>Eletronicos</option>
-                              <option value="alimentos" <?php echo ($produto['categoria'] == 'alimentos') ? 'selected' : ''; ?>>Alimentos</option>
-                              <option value="materiais" <?php echo ($produto['categoria'] == 'materiais') ? 'selected' : ''; ?>>Materiais</option>
-                              <option value="ferramentas" <?php echo ($produto['categoria'] == 'ferramentas') ? 'selected' : ''; ?>>Ferramentas</option>
+                            <input type="hidden" name="id_atualizar" value="<?= $id; ?>">
+                            <label for="novo_nome_<?= $id; ?>">Novo Nome:</label>
+                            <input type="text" id="novo_nome_<?= $id; ?>" name="novo_nome" class="form-control mb-2" required value="<?= $produto['nome']; ?>">
+                            <label for="nova_categoria_<?= $id; ?>">Nova Categoria:</label>
+                            <select id="nova_categoria_<?= $id; ?>" name="nova_categoria" class="form-control mb-2" required>
+                              <option value="eletronico" <?= ($produto['categoria'] == 'eletronico') ? 'selected' : ''; ?>>Eletronicos</option>
+                              <option value="alimentos" <?= ($produto['categoria'] == 'alimentos') ? 'selected' : ''; ?>>Alimentos</option>
+                              <option value="materiais" <?= ($produto['categoria'] == 'materiais') ? 'selected' : ''; ?>>Materiais</option>
+                              <option value="ferramentas" <?= ($produto['categoria'] == 'ferramentas') ? 'selected' : ''; ?>>Ferramentas</option>
                             </select>
           
-                            <label for="nova_quantidade_<?php echo $id; ?>">Nova Quantidade</label>
-                            <input type="number" id="nova_quantidade_<?php echo $id; ?>" name="nova_quantidade" class="form-control mb-2" required>
+                            <label for="nova_quantidade_<?= $id; ?>">Nova Quantidade</label>
+                            <input type="number" id="nova_quantidade_<?= $id; ?>" name="nova_quantidade" class="form-control mb-2" required>
           
           
-                            <label for="novo_preco_<?php echo $id; ?>">Novo Preço (R$)</label>
-                            <input type="number" step="0.01" id="novo_preco_<?php echo $id; ?>" name="novo_preco" class="form-control mb-2" required value="<?php echo $produto['preco']; ?>">
+                            <label for="novo_preco_<?= $id; ?>">Novo Preço (R$)</label>
+                            <input type="number" step="0.01" id="novo_preco_<?= $id; ?>" name="novo_preco" class="form-control mb-2" required value="<?= $produto['preco']; ?>">
           
-                            <button type="button" onclick="atualizarProduto(<?php echo $id; ?>)" class="btn btn-success">Atualizar</button>
+                            <button type="button" onclick="atualizarProduto(<?= $id; ?>)" class="btn btn-success">Atualizar</button>
                           </form>
                         </div>
                       </div>
