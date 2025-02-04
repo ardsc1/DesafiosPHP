@@ -87,8 +87,8 @@ button:hover {
   margin-top: 20px;
 }
 .tabela-container {
-  max-height: 400px; /* Altura máxima da tabela antes de ativar o scroll */
-  overflow-y: auto; /* Adiciona a barra de rolagem apenas na vertical */
+  max-height: 400px; 
+  overflow-y: auto; 
   border-radius: 10px;
   border: 1px solid #ddd;
 

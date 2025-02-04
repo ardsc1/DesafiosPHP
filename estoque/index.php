@@ -68,8 +68,9 @@ if (isset($_POST['calcular_total'])) {
     }
     $mensagem = "O valor total do estoque na categoria '$categoria' é R$ " . number_format($totalEstoque, 2, ',', '.');
 }
+//recarregar a pagina dps aparecer o sweetalert
 ?>
-
+ 
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -101,12 +102,12 @@ if (isset($_POST['calcular_total'])) {
             </div>
             <div class="modal-body">
               <form id="formAdicionar" method="POST">
-                <input type="hidden" name="adicionar" value="1">
+                <input type="hidden" name="adicionar" value="1" required>
                 <label for="nome">Nome do Produto</label>
                 <input type="text" id="nome" name="nome" class="form-control mb-2" required>
                 <label for="categoria">Categoria</label>
                 <select id="categoria" name="categoria" class="form-control mb-2" required>
-                  <option value="eletronico">Eletronico</option>
+                  <option value="eletronico">Eletronicos</option>
                   <option value="alimentos">Alimentos</option>
                   <option value="materiais">Materiais</option>
                   <option value="ferramentas">Ferramentas</option>
