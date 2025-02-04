@@ -80,7 +80,7 @@ if (isset($_POST['calcular_total'])) {
   <link rel="stylesheet" href="estoque.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <link rel="stylesheet" href="estoque.css?v=<?php echo time(); ?>">
+  <link rel="stylesheet" href="estoque.css?v=<?=time(); ?>">
 
 </head>
 <body>
@@ -88,7 +88,7 @@ if (isset($_POST['calcular_total'])) {
     <div class="container p-0 mt-2 mb-2">
       <h1>Gerenciamento de Estoque</h1>
       <?php if (isset($mensagem)): ?>
-        <div class="mensagem"><?php echo $mensagem; ?></div>
+        <div class="mensagem"><?= $mensagem; ?></div>
       <?php endif; ?>
       
       <button class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#modalAdicionar">Adicionar Produto</button>
@@ -150,7 +150,7 @@ if (isset($_POST['calcular_total'])) {
                 <?php if (is_null($precoMinimo) || $produto['preco'] >= $precoMinimo): ?>
                   <tr>
                     <td><?php echo $id; ?></td>
-                    <td><?php echo $produto['nome']; ?></td>
+                    <td><?php echo $produto['nome']; ?></td>,
                     <td><?php echo $produto['categoria']; ?></td>
                     <td>
                       <?php echo $produto['quantidade']; ?>
